@@ -1,4 +1,4 @@
-# Terraform
+# Terraform 생성 파일
 **/.terraform/*
 *.tfstate
 *.tfstate.*
@@ -8,7 +8,7 @@ crash.*.log
 .terraformrc
 terraform.rc
 
-# Local variable and secret files
+# 로컬 변수 및 비밀정보 파일
 *.auto.tfvars
 *.auto.tfvars.json
 terraform.tfvars
@@ -17,17 +17,17 @@ terraform.tfvars.json
 .env.*
 .local/
 
-# Keep safe examples
+# 안전한 예제 파일은 추적
 !*.example.tfvars
 !.env.example
 
-# Generated files
+# 기타 생성 파일
 *.kubeconfig
 *.pem
 *.key
 *.crt
 
-# Editors and operating systems
+# 편집기 및 운영체제
 .DS_Store
 .idea/
 .vscode/

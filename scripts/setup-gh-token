@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+project_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+token_dir="${project_root}/.local"
+token_file="${token_dir}/gh-token"
+
+if [[ ! -t 0 ]]; then
+  echo "대화형 터미널에서 이 스크립트를 실행하세요." >&2
+  exit 1
+fi
+
+read -r -s -p "GitHub 토큰: " token
+echo >&2
+
+if [[ -z "${token}" || "${token}" == *$'\n'* || "${token}" == *$'\r'* ]]; then
+  echo "토큰은 비어 있지 않은 한 줄이어야 합니다." >&2
+  exit 1
+fi
+
+umask 077
+mkdir -p "${token_dir}"
+printf '%s\n' "${token}" >"${token_file}"
+unset token
+chmod 600 "${token_file}"
+
+echo "프로젝트 로컬 토큰을 ${token_file}에 저장했습니다."
+echo "이 저장소의 GitHub CLI 명령에는 scripts/gh-project를 사용하세요."
