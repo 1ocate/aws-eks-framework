@@ -1,30 +1,42 @@
-# Repository Guidance
+# 저장소 지침
 
-This repository is intended to be publicly reusable.
+이 저장소는 외부에 공개하여 재사용할 수 있도록 관리합니다.
 
-## Safety
+## 안전
 
-- Never commit credentials, Terraform state, kubeconfig files, private keys, or
-  organization-specific identifiers.
-- Use placeholders and documented input variables for account IDs, domains,
-  repository URLs, CIDR ranges, and resource names.
-- Never run `terraform apply` without explicit user approval.
-- Review the complete Terraform plan before apply. Stop when a plan contains
-  unexpected replacement or destruction.
-- Do not use real production environments for examples or tests.
+- 자격 증명, Terraform state, kubeconfig, 개인 키 또는 조직별 식별자를
+  커밋하지 않습니다.
+- 계정 ID, 도메인, 저장소 URL, CIDR 범위와 리소스 이름에는 플레이스홀더와
+  문서화된 입력 변수를 사용합니다.
+- 명시적인 사용자 승인 없이 `terraform apply`를 실행하지 않습니다.
+- apply 전에 전체 Terraform plan을 검토합니다. 예상하지 못한 교체 또는
+  삭제가 있으면 중단합니다.
+- 예제나 테스트에 실제 운영 환경을 사용하지 않습니다.
 
-## Design
+## 설계
 
-- Keep shared resources independent from replaceable EKS clusters.
-- Keep reusable Terraform modules free of environment-specific backend and
-  provider configuration.
-- Prefer explicit inputs and outputs over cross-layer implicit dependencies.
-- Pin provider, module, Helm chart, and Kubernetes component versions.
-- Include validation and safe examples for every public module.
+- 공유 리소스는 교체 가능한 EKS 클러스터와 독립적으로 유지합니다.
+- 재사용 가능한 Terraform 모듈에는 환경별 backend와 provider 설정을
+  포함하지 않습니다.
+- 계층 간 암묵적인 의존성보다 명시적인 입력과 출력을 우선합니다.
+- provider, module, Helm chart와 Kubernetes 구성요소 버전을 고정합니다.
+- 모든 공개 모듈에 검증 규칙과 안전한 예제를 포함합니다.
 
-## Verification
+## 모델 선택
 
-- Run `terraform fmt -check -recursive`.
-- Run `terraform validate` in every root module after initialization.
-- Render and validate every changed Kustomize overlay.
-- Scan tracked files for secrets and organization-specific values before release.
+- 일반적인 Terraform, Kubernetes, 문서화, 검증 및 유지보수 작업에는 저장소
+  기본값인 GPT-5.6 Terra와 medium reasoning을 사용합니다.
+- 아키텍처 결정, 어려운 디버깅, 계층 간 의존성 분석, 보안 검토와
+  마이그레이션 계획은 GPT-5.6 Sol과 high reasoning으로 새 세션을 시작합니다.
+- 파괴적인 Terraform plan이나 운영 마이그레이션 계획처럼 위험도가 가장
+  높은 검토에만 GPT-5.6 Sol과 xhigh reasoning을 사용합니다.
+- 모델 선택은 세션 단위이며 작업 복잡도에 따라 자동으로 전환되지 않습니다.
+- 선택 기준, 명령과 토큰 효율화 방법은
+  `docs/codex-model-guidelines.md`를 따릅니다.
+
+## 검증
+
+- `terraform fmt -check -recursive`를 실행합니다.
+- 초기화 후 모든 root module에서 `terraform validate`를 실행합니다.
+- 변경한 모든 Kustomize overlay를 렌더링하고 검증합니다.
+- 릴리스 전에 추적 파일에서 비밀정보와 조직별 값을 검사합니다.
