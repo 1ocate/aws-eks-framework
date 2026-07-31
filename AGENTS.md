@@ -13,6 +13,18 @@ This repository is intended to be publicly reusable.
   unexpected replacement or destruction.
 - Do not use real production environments for examples or tests.
 
+## GitHub authentication
+
+- Do not conclude that a token is expired or invalid only from a failed
+  `gh auth status`; sandbox network limits or global GitHub CLI credentials
+  may be the cause.
+- Before GitHub CLI work, if the ignored `.local/gh-token` file exists, pass
+  it only to that command as `GH_TOKEN` and verify authentication with
+  `gh api user`, without printing the token.
+- If local-token authentication succeeds, report it separately from any global
+  `gh` credential error. Never include a token in logs, command output, commits,
+  or PR bodies, and do not change global authentication settings.
+
 ## Design
 
 - Keep shared resources independent from replaceable EKS clusters.
