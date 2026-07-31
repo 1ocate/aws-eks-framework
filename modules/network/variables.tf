@@ -29,11 +29,16 @@ variable "availability_zones" {
 }
 
 variable "subnet_cidrs" {
-  description = "CIDRs for each independently replaceable cluster slot, keyed by slot then AZ."
+  description = "CIDRs keyed by cluster slot then AZ. Supply one slot for in-place operations or multiple slots for replacement workflows."
   type = map(object({
     public  = map(string)
     private = map(string)
   }))
+
+  validation {
+    condition     = length(var.subnet_cidrs) >= 1
+    error_message = "subnet_cidrs must define at least one cluster slot."
+  }
 
   validation {
     condition = alltrue([
