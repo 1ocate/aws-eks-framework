@@ -15,6 +15,7 @@ terraform.tfvars
 terraform.tfvars.json
 .env
 .env.*
+.local/
 
 # Keep safe examples
 !*.example.tfvars
