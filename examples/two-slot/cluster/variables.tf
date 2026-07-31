@@ -8,6 +8,11 @@ variable "cluster_name" {
   type        = string
 }
 
+variable "cluster_version" {
+  description = "Pinned EKS Kubernetes minor version selected by the consumer."
+  type        = string
+}
+
 variable "vpc_id" {
   description = "VPC ID from the separately managed network state."
   type        = string

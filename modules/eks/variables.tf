@@ -9,8 +9,13 @@ variable "cluster_name" {
 }
 
 variable "cluster_version" {
-  description = "Pinned EKS Kubernetes version."
+  description = "Pinned EKS Kubernetes minor version, for example 1.35."
   type        = string
+
+  validation {
+    condition     = can(regex("^[0-9]+\\.[0-9]+$", var.cluster_version))
+    error_message = "cluster_version must be an EKS Kubernetes minor version in major.minor form."
+  }
 }
 
 variable "vpc_id" {

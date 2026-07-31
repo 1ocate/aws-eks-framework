@@ -51,7 +51,8 @@ terraform validate
 
 network apply 후 `private_subnet_ids_by_slot["blue"]`와 `vpc_id`를 안전한
 원격 state 또는 CI 변수로 cluster root에 전달합니다. `terraform.tfvars`는
-추적하지 않습니다. 적용 전에는 전체 plan을 검토해야 합니다.
+추적하지 않습니다. `cluster_version`은 대상 계정에서 지원되는 EKS Kubernetes
+minor version으로 명시하고, 적용 전에는 전체 plan을 검토해야 합니다.
 
 ## 상태
 
