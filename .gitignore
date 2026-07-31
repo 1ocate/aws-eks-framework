@@ -1,0 +1,32 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+.terraformrc
+terraform.rc
+
+# Local variable and secret files
+*.auto.tfvars
+*.auto.tfvars.json
+terraform.tfvars
+terraform.tfvars.json
+.env
+.env.*
+
+# Keep safe examples
+!*.example.tfvars
+!.env.example
+
+# Generated files
+*.kubeconfig
+*.pem
+*.key
+*.crt
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
