@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+project_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+token_file="${project_root}/.local/gh-token"
+
+if [[ ! -f "${token_file}" ]]; then
+  echo "프로젝트 로컬 GitHub 토큰을 찾을 수 없습니다." >&2
+  echo "먼저 scripts/setup-gh-token을 실행하세요." >&2
+  exit 1
+fi
+
+if permissions="$(stat -f '%Lp' "${token_file}" 2>/dev/null)"; then
+  :
+elif permissions="$(stat -c '%a' "${token_file}" 2>/dev/null)"; then
+  :
+else
+  echo "${token_file}의 권한을 확인할 수 없습니다." >&2
+  exit 1
+fi
+
+if [[ "${permissions}" != "600" ]]; then
+  echo "${token_file}의 권한이 600이 아니므로 사용하지 않습니다." >&2
+  exit 1
+fi
+
+IFS= read -r GH_TOKEN <"${token_file}"
+if [[ -z "${GH_TOKEN}" ]]; then
+  echo "빈 GitHub 토큰은 사용할 수 없습니다." >&2
+  exit 1
+fi
+
+export GH_TOKEN
+exec gh "$@"
