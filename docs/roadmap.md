@@ -10,6 +10,7 @@
 ## 2단계: EKS 플랫폼
 
 - EKS cluster module을 구현했습니다.
+- EBS CSI Driver를 선택 가능한 EKS add-on 모듈로 구현했습니다.
 - Cilium과 Karpenter를 선택 가능한 별도 모듈로 추가합니다.
 - load balancer와 storage controller를 추가합니다.
 - blue와 green 예제 root를 추가합니다.
