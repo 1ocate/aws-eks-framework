@@ -8,12 +8,12 @@ DNS/ACM, state backend, GitOps 저장소와 비밀정보는 범위에 포함하�
 
 ## 계층 모델
 
-1. 각 사용 환경이 소유한 `backend`는 root별 state를 격리합니다.
+1. 각 대상 환경이 소유한 `backend`는 root module별 state를 격리합니다.
 2. `network`는 VPC와 cluster slot별 public/private subnet, NAT를 생성합니다.
 3. `cluster`는 하나의 EKS control plane, system capacity, OIDC provider를
    생성합니다.
 4. 선택적 platform, workload identity binding, GitOps는 cluster output을
-   입력으로 받아 사용 환경의 별도 state에서 관리합니다.
+   입력으로 받아 대상 환경의 별도 state에서 관리합니다.
 
 각 계층은 독립적인 Terraform state를 사용합니다. 특히 shared data service는
 이 저장소가 관리하지 않으며, cluster 교체와 수명 주기가 결합되지 않습니다.

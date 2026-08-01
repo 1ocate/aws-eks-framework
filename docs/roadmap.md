@@ -5,7 +5,7 @@
 - 공개 variable과 output 규칙을 정의했습니다.
 - Terraform과 provider 버전 제약을 추가했습니다.
 - slot별 network module과 EKS module, 중립 예제를 구현했습니다.
-- state backend는 사용 환경에서 관리해 조직별 S3 의존성을 제거했습니다.
+- state backend는 대상 환경에서 관리해 조직별 S3 의존성을 제거했습니다.
 
 ## 2단계: EKS 플랫폼
 

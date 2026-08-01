@@ -23,7 +23,7 @@ Amazon EKS 클러스터의 in-place 업그레이드와 blue/green 교체 수명 
 
 다음 항목은 의도적으로 제공하지 않습니다. 조직별 애플리케이션과 namespace,
 S3·RDS·CloudFront 같은 공유 데이터 서비스, DNS/ACM, 원격 state 저장소,
-Git repository URL 및 비밀정보입니다. 이들은 사용 환경에서 별도 state와
+Git repository URL 및 비밀정보입니다. 이들은 대상 환경에서 별도 state와
 명시적 입력·출력으로 연결해야 합니다.
 
 ## 디렉터리 구조
@@ -41,7 +41,7 @@ examples/two-slot
 ## 시작하기
 
 예제는 실제 리소스를 만들지 않는 검증용 구성입니다. 각 root의 state backend는
-각 사용 환경이 소유하며, `terraform init` 시 backend 설정을 별도로 전달합니다.
+대상 환경이 소유하며, `terraform init` 시 backend 설정을 별도로 전달합니다.
 
 ```sh
 cd examples/two-slot/network
@@ -62,7 +62,7 @@ minor version으로 명시하고, 적용 전에는 전체 plan을 검토해야 �
 현재 VPC/EKS 기반 모듈과 안전한 two-slot 예제를 제공합니다. 플랫폼 add-on,
 IRSA binding, GitOps와 shared service 연결은 별도 모듈로 추가될 예정입니다.
 `addons`를 사용할 경우에는 대상 EKS 버전과 호환되는 정확한 add-on 버전을
-사용 환경의 root에서 명시해야 합니다.
+대상 환경의 root module에서 명시해야 합니다.
 
 ## 기여자 안내
 
