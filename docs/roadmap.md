@@ -1,16 +1,16 @@
 # 로드맵
 
-## 1단계: 기반
+## 1단계: 기반 — 완료
 
-- 공개 variable과 output 규칙을 정의합니다.
-- Terraform과 provider 버전 제약을 추가합니다.
-- state bootstrap과 network module을 구현합니다.
-- 정적 검사와 비밀정보 검사를 추가합니다.
+- 공개 variable과 output 규칙을 정의했습니다.
+- Terraform과 provider 버전 제약을 추가했습니다.
+- slot별 network module과 EKS module, 중립 예제를 구현했습니다.
+- state backend는 대상 환경에서 관리해 조직별 S3 의존성을 제거했습니다.
 
 ## 2단계: EKS 플랫폼
 
-- EKS cluster module을 구현합니다.
-- Cilium과 Karpenter를 추가합니다.
+- EKS cluster module을 구현했습니다.
+- Cilium과 Karpenter를 선택 가능한 별도 모듈로 추가합니다.
 - load balancer와 storage controller를 추가합니다.
 - blue와 green 예제 root를 추가합니다.
 
