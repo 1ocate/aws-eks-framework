@@ -1,0 +1,5 @@
+aws_region        = "ap-northeast-2"
+cluster_name      = "example-eks-blue"
+oidc_provider_arn = "arn:aws:iam::123456789012:oidc-provider/oidc.eks.ap-northeast-2.amazonaws.com/id/REPLACE_ME"
+oidc_provider_url = "https://oidc.eks.ap-northeast-2.amazonaws.com/id/REPLACE_ME"
+iam_policy_arn    = "arn:aws:iam::123456789012:policy/REPLACE_ME"
