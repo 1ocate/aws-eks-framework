@@ -12,6 +12,7 @@
 - EKS cluster module을 구현했습니다.
 - EBS CSI Driver를 선택 가능한 EKS add-on 모듈로 구현했습니다.
 - EBS CSI용 암호화된 gp3 StorageClass Kustomize 구성을 추가했습니다.
+- EKS Pod Identity Agent와 service account association 모듈을 구현했습니다.
 - Cilium과 Karpenter를 선택 가능한 별도 모듈로 추가합니다.
 - load balancer와 storage controller를 추가합니다.
 - blue와 green 예제 root를 추가합니다.
