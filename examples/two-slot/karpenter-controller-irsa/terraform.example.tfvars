@@ -1,0 +1,7 @@
+aws_region             = "ap-northeast-2"
+cluster_name           = "example-eks-blue"
+oidc_provider_arn      = "arn:aws:iam::123456789012:oidc-provider/oidc.eks.ap-northeast-2.amazonaws.com/id/REPLACE_ME"
+oidc_provider_url      = "https://oidc.eks.ap-northeast-2.amazonaws.com/id/REPLACE_ME"
+node_role_arn          = "arn:aws:iam::123456789012:role/example-eks-blue-karpenter-node"
+interruption_queue_arn = "arn:aws:sqs:ap-northeast-2:123456789012:example-eks-blue-karpenter-interruption"
+role_name              = "example-eks-blue-karpenter-controller"
