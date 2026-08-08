@@ -29,12 +29,12 @@ locals {
 }
 
 resource "aws_sqs_queue" "this" {
-  name                              = local.queue_name
-  message_retention_seconds         = var.message_retention_seconds
-  sqs_managed_sse_enabled           = true
-  receive_wait_time_seconds         = 20
-  visibility_timeout_seconds        = var.visibility_timeout_seconds
-  tags                              = local.common_tags
+  name                       = local.queue_name
+  message_retention_seconds  = var.message_retention_seconds
+  sqs_managed_sse_enabled    = true
+  receive_wait_time_seconds  = 20
+  visibility_timeout_seconds = var.visibility_timeout_seconds
+  tags                       = local.common_tags
 }
 
 resource "aws_sqs_queue_policy" "this" {
