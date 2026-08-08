@@ -5,13 +5,13 @@ data "aws_partition" "current" {}
 data "aws_region" "current" {}
 
 locals {
-  account_id    = data.aws_caller_identity.current.account_id
-  partition     = data.aws_partition.current.partition
-  region        = data.aws_region.current.name
-  issuer_host   = trimprefix(var.oidc_provider_url, "https://")
-  cluster_tag   = "kubernetes.io/cluster/${var.cluster_name}"
-  common_tags   = merge(var.tags, { "managed-by" = "terraform" })
-  ec2_region_arn = "arn:${local.partition}:ec2:${local.region}"
+  account_id      = data.aws_caller_identity.current.account_id
+  partition       = data.aws_partition.current.partition
+  region          = data.aws_region.current.name
+  issuer_host     = trimprefix(var.oidc_provider_url, "https://")
+  cluster_tag     = "kubernetes.io/cluster/${var.cluster_name}"
+  common_tags     = merge(var.tags, { "managed-by" = "terraform" })
+  ec2_region_arn  = "arn:${local.partition}:ec2:${local.region}"
   iam_account_arn = "arn:${local.partition}:iam::${local.account_id}"
 }
 
@@ -82,9 +82,9 @@ resource "aws_iam_role_policy" "node_lifecycle" {
         Resource = "${local.ec2_region_arn}:*:instance/*"
         Action   = "ec2:CreateTags"
         Condition = {
-          StringEquals               = { "aws:ResourceTag/${local.cluster_tag}" = "owned" }
-          StringLike                 = { "aws:ResourceTag/karpenter.sh/nodepool" = "*" }
-          StringEqualsIfExists       = { "aws:RequestTag/eks:eks-cluster-name" = var.cluster_name }
+          StringEquals                = { "aws:ResourceTag/${local.cluster_tag}" = "owned" }
+          StringLike                  = { "aws:ResourceTag/karpenter.sh/nodepool" = "*" }
+          StringEqualsIfExists        = { "aws:RequestTag/eks:eks-cluster-name" = var.cluster_name }
           "ForAllValues:StringEquals" = { "aws:TagKeys" = ["eks:eks-cluster-name", "karpenter.sh/nodeclaim", "Name"] }
         }
       },
