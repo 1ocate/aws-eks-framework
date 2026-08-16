@@ -61,6 +61,8 @@ plan을 검토해야 합니다. 자세한 생성·전환·되돌리기 순서는
 [blue/green 운영 절차](docs/architecture.md#bluegreen-운영-절차)를 참조하세요.
 
 클러스터 수명 주기 전략과 slot 구성 방법은 [아키텍처 문서](docs/architecture.md#클러스터-수명-주기-전략)에서 확인할 수 있습니다.
+Argo CD를 사용한 환경 revision 승격과 rollback 기준은
+[GitOps 운영 절차](docs/gitops-promotion.md)에서 확인할 수 있습니다.
 
 ## 상태
 
