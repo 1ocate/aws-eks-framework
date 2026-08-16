@@ -35,7 +35,10 @@ modules
 
 examples/two-slot
   ├── network       # shared network state
-  └── cluster       # one independently replaceable EKS slot
+  ├── blue-cluster  # independently managed blue EKS slot state
+  ├── green-cluster # independently managed green EKS slot state
+  ├── argocd        # independently managed Argo CD bootstrap state
+  └── cluster       # reusable configuration shared by each slot root
 ```
 
 ## 시작하기

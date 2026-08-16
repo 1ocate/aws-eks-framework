@@ -45,6 +45,41 @@ Blue와 green은 영구 환경이 아니라 교체 가능한 클러스터 slot�
 생성하고 플랫폼과 workload를 동기화한 뒤 검증, 트래픽 전환을 수행하고, 정의된
 rollback 기간 동안 이전 색상을 유지하는 방식으로 진행합니다.
 
+## Blue/green 운영 절차
+
+`examples/two-slot/network`, `blue-cluster`, `green-cluster`는 각각 독립된
+root module과 state입니다. 따라서 network와 현재 운영 중인 cluster의 plan은
+새 slot을 만드는 과정에서 변경되지 않아야 합니다. network 출력은
+`private_subnet_ids_by_slot["blue"]` 또는 `["green"]`와 `vpc_id`만 각 cluster
+root의 입력으로 전달합니다. `terraform_remote_state`는 output만 노출하더라도
+소비자에게 전체 state snapshot 읽기 권한이 필요하므로, state에 민감한 정보가
+있으면 사용하지 않습니다. 가능한 경우 CI의 안전한 변수나 별도 구성 저장소로
+필요한 값을 명시적으로 전달합니다. [Terraform의 state 공유 지침](https://developer.hashicorp.com/terraform/language/state/remote-state-data)을
+참조하세요.
+
+1. network root의 전체 plan을 검토해 기존 slot을 교체·삭제하지 않는지 확인한
+   뒤, 필요한 slot subnet만 생성합니다.
+2. 비활성 색상의 cluster root에 VPC ID와 해당 slot의 private subnet ID를
+   전달하고, 전체 plan을 검토한 뒤 생성합니다. private-only API endpoint에
+   접근할 수 있는 실행 환경을 준비합니다.
+3. 새 cluster output을 별도 state의 add-on, identity binding, Helm 및 GitOps
+   계층에 명시적으로 전달합니다. 새 cluster의 endpoint, CA, OIDC output은 이
+   목적의 입력이며, provider 설정과 cluster 생성을 같은 root에 결합하지
+   않습니다.
+4. workload와 data compatibility, 관측·알림, ingress 및 rollback 조건을
+   검증합니다. DNS·ACM·공유 data service는 이 저장소 범위 밖이므로 대상
+   환경의 별도 변경 절차로 트래픽을 전환합니다.
+5. 정의된 rollback 기간 동안 이전 색상을 유지합니다. 문제가 생기면 트래픽을
+   이전 색상으로 되돌리고 새 색상의 원인을 조사합니다.
+6. 보존 기간이 끝난 뒤에만 이전 cluster root의 전체 destroy plan을 검토하고
+   제거합니다. shared network, data service 및 새 cluster state는 이 단계에서
+   변경하거나 제거하지 않습니다.
+
+EKS private endpoint를 사용할 때에는 실행 환경에서 VPC DNS와 API endpoint에
+도달할 수 있어야 합니다. EKS는 private endpoint에 필요한 private hosted zone을
+관리하며 VPC DNS 지원을 요구합니다. [EKS API endpoint access 문서](https://docs.aws.amazon.com/eks/latest/userguide/cluster-endpoint.html)를
+적용 전 확인하세요.
+
 ## 구성 원칙
 
 - 환경 root가 backend와 provider 설정을 소유합니다. 예제는 backend를
