@@ -40,7 +40,9 @@
 
 ## 릴리스 준비
 
-- 자동 검증과 integration test를 추가합니다.
+- Terraform format·example root validate·Kustomize rendering·secret pattern을
+  검사하는 CI를 추가했습니다. 실제 AWS integration test는 격리된 test account와
+  비용·cleanup 정책을 먼저 정한 뒤 추가합니다.
 - 보안 및 비용 검토를 완료합니다.
 - 라이선스와 기여 정책을 선택합니다.
 - 저장소 이력에 비공개 자료가 없는지 확인합니다.
