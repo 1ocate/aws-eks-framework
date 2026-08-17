@@ -22,6 +22,25 @@ AI는 사용자가 요청한 범위 밖의 component를 생성하지 않으며, 
 feature flag를 한 실행 디렉터리에 쌓지 않는다. 필요한 component만 포함한 실행
 디렉터리를 만든다.
 
+## Framework module 배포와 버전 고정
+
+사용자 환경은 framework와 다른 저장소이므로 상대 경로로 `modules/`를 참조하지
+않는다. Terraform module의 `source`는 init 시점에 결정되어야 하므로, AI가 template을
+렌더링할 때 다음 placeholder를 리터럴 Git source로 바꾼다.
+
+```hcl
+source = "git::{framework_repository}//modules/network?ref={framework_ref}"
+```
+
+`{framework_ref}`는 검증된 framework release tag가 가리키는 전체 commit SHA를
+사용한다. release tag를 사람에게 보이는 버전 이름으로 기록할 수는 있지만, Terraform
+source 자체에는 이동하지 않는 commit SHA를 사용한다. branch 이름이나 로컬 절대 경로는
+사용하지 않는다.
+
+AI는 생성 전에 source repository, module subdirectory, ref가 의도한 framework
+release인지 사용자에게 제시한다. `terraform init` 뒤에는 생성된 `.terraform.lock.hcl`을
+검토·추적한다.
+
 ## 전략별 디렉터리
 
 ### 단일 cluster
