@@ -1,0 +1,10 @@
+module "network" {
+  source = "git::{framework_repository}//modules/network?ref={framework_ref}"
+
+  name               = var.name
+  vpc_cidr           = var.vpc_cidr
+  availability_zones = var.availability_zones
+  subnet_cidrs       = var.subnet_cidrs
+  nat_gateway_mode   = var.nat_gateway_mode
+  tags               = var.tags
+}

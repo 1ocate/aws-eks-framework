@@ -1,0 +1,13 @@
+module "cluster" {
+  source = "git::{framework_repository}//modules/eks?ref={framework_ref}"
+
+  cluster_name           = var.cluster_name
+  cluster_version        = var.cluster_version
+  vpc_id                 = var.vpc_id
+  private_subnet_ids     = var.private_subnet_ids
+  endpoint_public_access = var.endpoint_public_access
+  public_access_cidrs    = var.public_access_cidrs
+  node_groups            = var.node_groups
+  addons                 = var.addons
+  tags                   = var.tags
+}
