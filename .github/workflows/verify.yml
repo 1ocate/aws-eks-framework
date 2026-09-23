@@ -1,0 +1,66 @@
+name: Verify
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.13.3
+          terraform_wrapper: false
+
+      - name: Check formatting
+        run: terraform fmt -check -recursive
+
+      - name: Initialize and validate example roots
+        run: |
+          set -euo pipefail
+          for directory in examples/two-slot/*; do
+            test -f "${directory}/.terraform.lock.hcl" || continue
+            terraform -chdir="${directory}" init -backend=false -input=false -lockfile=readonly
+            terraform -chdir="${directory}" validate -no-color
+          done
+
+  kustomize:
+    name: Kustomize
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/setup-kubectl@v4
+        with:
+          version: v1.35.0
+
+      - name: Render all Kustomizations
+        run: |
+          set -euo pipefail
+          while IFS= read -r file; do
+            kubectl kustomize "${file%/kustomization.yaml}" >/dev/null
+          done < <(find gitops -name kustomization.yaml -print | sort)
+
+  secrets:
+    name: Secret patterns
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan tracked files
+        run: |
+          set -euo pipefail
+          pattern='AKIA[0-9A-Z]{16}|ASIA[0-9A-Z]{16}|aws_secret_access_[k]ey|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----|ghp_[A-Za-z0-9]{36,}|github_pat_[A-Za-z0-9_]{20,}'
+          if git grep -nEI "${pattern}"; then
+            echo "Potential secret detected in a tracked file."
+            exit 1
+          fi

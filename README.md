@@ -75,6 +75,9 @@ two-slot 예제를 제공합니다. Git repository 연결과 shared service는 �
 ## 기여자 안내
 
 - [Codex 모델 가이드라인](docs/codex-model-guidelines.md)
+- pull request에서는 Terraform format·example root validate·Kustomize rendering과
+  추적 파일의 secret pattern 검사를 자동으로 실행합니다. CI는 실제 backend,
+  cloud credential 또는 `terraform apply`를 사용하지 않습니다.
 
 ## 라이선스
 
