@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sample-application
+  namespace: argocd
+  labels:
+    app.kubernetes.io/component: sample-bootstrap
+    app.kubernetes.io/managed-by: kustomize
+spec:
+  project: default
+  source:
+    # Set these three fields in an environment overlay before applying.
+    repoURL: https://REPLACE_ME.invalid/sample-gitops.git
+    targetRevision: REPLACE_ME
+    path: REPLACE_ME
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sample-app

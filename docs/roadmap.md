@@ -34,7 +34,8 @@
 
 - Argo CD bootstrap과 수동 sync를 기본값으로 하는 선택 가능한 platform
   Application template을 추가했습니다.
-- 중립적인 sample application을 추가합니다.
+- 수동 sync를 기본값으로 하는 중립 sample application과 Application template을
+  추가했습니다.
 - 환경 승격과 rollback 절차를 문서화합니다.
 
 ## 릴리스 준비
