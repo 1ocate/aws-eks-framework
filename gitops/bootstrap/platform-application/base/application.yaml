@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform
+  namespace: argocd
+  labels:
+    app.kubernetes.io/component: platform-bootstrap
+    app.kubernetes.io/managed-by: kustomize
+spec:
+  project: default
+  source:
+    # Set these three fields in an environment overlay before applying.
+    repoURL: https://REPLACE_ME.invalid/platform-config.git
+    targetRevision: REPLACE_ME
+    path: REPLACE_ME
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd

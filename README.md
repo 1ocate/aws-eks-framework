@@ -53,19 +53,22 @@ terraform init -backend=false
 terraform validate
 ```
 
-network apply 후 `private_subnet_ids_by_slot["blue"]`와 `vpc_id`를 안전한
-원격 state 또는 CI 변수로 cluster root에 전달합니다. `terraform.tfvars`는
-추적하지 않습니다. `cluster_version`은 대상 계정에서 지원되는 EKS Kubernetes
-minor version으로 명시하고, 적용 전에는 전체 plan을 검토해야 합니다.
+network apply 후 `private_subnet_ids_by_slot["blue"]`와 `vpc_id`를
+`blue-cluster` root에, green 값은 `green-cluster` root에 각각 명시적으로
+전달합니다. `terraform.tfvars`는 추적하지 않습니다. `cluster_version`은 대상
+계정에서 지원되는 EKS Kubernetes minor version으로 명시하고, 적용 전에는 전체
+plan을 검토해야 합니다. 자세한 생성·전환·되돌리기 순서는
+[blue/green 운영 절차](docs/architecture.md#bluegreen-운영-절차)를 참조하세요.
 
 클러스터 수명 주기 전략과 slot 구성 방법은 [아키텍처 문서](docs/architecture.md#클러스터-수명-주기-전략)에서 확인할 수 있습니다.
 
 ## 상태
 
-현재 VPC/EKS 기반 모듈과 안전한 two-slot 예제를 제공합니다. 플랫폼 add-on,
-IRSA binding, GitOps와 shared service 연결은 별도 모듈로 추가될 예정입니다.
-`addons`를 사용할 경우에는 대상 EKS 버전과 호환되는 정확한 add-on 버전을
-대상 환경의 root module에서 명시해야 합니다.
+현재 VPC/EKS 기반 모듈, EBS CSI, workload identity, AWS Load Balancer
+Controller, Cilium AWS CNI chaining, Karpenter, Argo CD bootstrap 및 안전한
+two-slot 예제를 제공합니다. Git repository 연결과 shared service는 대상 환경의
+별도 state에서 관리합니다. `addons`를 사용할 경우에는 대상 EKS 버전과 호환되는
+정확한 add-on 버전을 대상 환경의 root module에서 명시해야 합니다.
 
 ## 기여자 안내
 

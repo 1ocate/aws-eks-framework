@@ -16,25 +16,25 @@
   구성을 추가했습니다.
 - EKS Pod Identity Agent 및 service account association 모듈을 추가했습니다.
 - AWS Load Balancer Controller가 사용할 IRSA role 모듈을 추가했습니다.
+- AWS Load Balancer Controller Helm release, Cilium AWS VPC CNI chaining,
+  Karpenter IAM·interruption event·controller IRSA·Helm release 및 NodePool
+  GitOps base를 추가했습니다.
+- blue/green cluster root 예제와 Argo CD bootstrap Helm module·예제를
+  추가했습니다.
 
 ## 다음 EKS 플랫폼 작업
 
 완료 순서를 고정하지 않으며, 대상 환경의 요구에 따라 필요한 항목만
 선택합니다. 아래 항목은 각각 별도 PR로 진행합니다.
 
-1. AWS Load Balancer Controller Helm release 모듈과 예제를 추가합니다.
-   기존 IRSA role의 ARN을 명시적으로 입력받고, chart version과 Service
-   mutator webhook 사용 여부를 변수로 노출합니다.
-2. Cilium 설치 구성을 별도 모듈 또는 GitOps application으로 추가합니다.
-3. Karpenter용 IAM과 Helm release 구성을 분리된 PR로 추가합니다.
-4. blue 및 green cluster root 예제를 추가해 교체 전략의 전체 연결 방식을
-   보여 줍니다.
+현재는 플랫폼 기반 모듈을 완료했습니다. 다음 작업은 GitOps application과
+운영 절차를 작은 독립 PR로 추가하는 것입니다.
 
 ## GitOps
 
-- Argo CD bootstrap 구성을 추가합니다.
-- 선택 가능한 platform application과 중립적인 sample application을
-  추가합니다.
+- Argo CD bootstrap과 수동 sync를 기본값으로 하는 선택 가능한 platform
+  Application template을 추가했습니다.
+- 중립적인 sample application을 추가합니다.
 - 환경 승격과 rollback 절차를 문서화합니다.
 
 ## 릴리스 준비
