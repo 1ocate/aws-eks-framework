@@ -36,7 +36,7 @@
   Application template을 추가했습니다.
 - 수동 sync를 기본값으로 하는 중립 sample application과 Application template을
   추가했습니다.
-- 환경 승격과 rollback 절차를 문서화합니다.
+- environment revision의 승격·중단·rollback 절차를 문서화했습니다.
 
 ## 릴리스 준비
 
